@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maryland Company | Immigration & Travel Services</title>
+    <!-- FontAwesome for Social and Feature Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Colors & Variables --- */
+        :root {
+            --bg-dark: #111827;
+            --card-dark: #1F2937;
+            --text-light: #F9FAFB;
+            --text-gray: #9CA3AF;
+            
+            /* Kurdistan Inspired Brand Colors */
+            --kr-red: #E63946;
+            --kr-gold: #FFB703;
+            --kr-green: #2A9D8F;
+        }
+
+        /* --- Reset & Base Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(17, 24, 39, 0.95);
+            border-bottom: 2px solid var(--kr-gold);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--kr-gold);
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--kr-gold);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 8rem 2rem 5rem 2rem;
+            background: linear-gradient(135deg, rgba(17,24,39,0.9) 0%, rgba(31,41,55,0.8) 100%), 
+                        url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            border-bottom: 4px solid var(--kr-red);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .hero h1 span {
+            color: var(--kr-red);
+            border-bottom: 3px solid var(--kr-gold);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background-color: var(--kr-gold);
+            color: #000;
+            padding: 0.8rem 2rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            background-color: #e5a400;
+        }
+
+        /* --- Section Styling --- */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--kr-green);
+            margin: 0.5rem auto 0 auto;
+            border-radius: 2px;
+        }
+
+        /* --- Passport Feature (Highlight) --- */
+        .passport-highlight {
+            background-color: var(--card-dark);
+            border-left: 5px solid var(--kr-green);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 4rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .passport-icon {
+            font-size: 3.5rem;
+            color: var(--kr-gold);
+        }
+
+        .passport-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .country-tag {
+            background-color: rgba(42, 157, 143, 0.2);
+            border: 1px solid var(--kr-green);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* --- Services Grid --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background-color: var(--card-dark);
+            padding: 2rem;
+            border-radius: 8px;
+            transition: transform 0.3s, border-color 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--kr-gold);
+        }
+
+        .service-card i {
+            font-size: 2rem;
+            color: var(--kr-gold);
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        /* --- Slogan Banner --- */
+        .slogan-banner {
+            background: linear-gradient(to right, var(--kr-red), var(--kr-gold));
+            color: #000;
+            text-align: center;
+            padding: 4rem 2rem;
+            font-size: 1.8rem;
+            font-weight: bold;
+            font-style: italic;
+            border-radius: 8px;
+            margin: 4rem 0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        /* --- Footer & Contact --- */
+        footer {
+            background-color: #0b0f19;
+            padding: 4rem 2rem 2rem 2rem;
+            border-top: 3px solid var(--kr-red);
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-about h3, .footer-contact h3 {
+            color: var(--kr-gold);
+            margin-bottom: 1.2rem;
+        }
+
+        .footer-contact p {
+            margin-bottom: 0.8rem;
+            color: var(--text-gray);
+        }
+
+        .footer-contact i {
+            margin-right: 0.5rem;
+            color: var(--kr-green);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--card-dark);
+            color: var(--text-light);
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .social-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .fb:hover { background-color: #1877F2; }
+        .ig:hover { background-color: #E1306C; }
+        .tt:hover { background-color: #000000; border: 1px solid #FFF; }
+
+        .copyright {
+            text-align: center;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--card-dark);
+            padding-top: 2rem;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Simplification for clean layout */
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .passport-highlight {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Nav -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">MARYLAND <span>COMPANY</span></div>
+            <nav class="nav-links">
+                <a href="#services">Services</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to <span>Maryland Company</span></h1>
+            <p>Your premium, trusted partner for global immigration, travel, and tourism services in Sulaymaniyah. Backed by a highly qualified professional staff.</p>
+            <a href="#contact" class="cta-btn"><i class="fa-solid fa-paper-plane"></i> Get Started Today</a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <section id="services">
+            <h2 class="section-title">Our Professional Services</h2>
+
+            <!-- Passport Highlight Box -->
+            <div class="passport-highlight">
+                <div class="passport-icon">
+                    <i class="fa-solid fa-passport"></i>
+                </div>
+                <div>
+                    <h2>Second Passport Issuance & Renewal</h2>
+                    <p>Expand your global mobility. We specialize in fast-track programs and renewals for elite economic citizenships:</p>
+                    <div class="passport-list">
+                        <span class="country-tag">Dominica</span>
+                        <span class="country-tag">St. Kitts & Nevis</span>
+                        <span class="country-tag">St. Lucia</span>
+                        <span class="country-tag">Antigua & Barbuda</span>
+                        <span class="country-tag">Grenada</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Grid Layout -->
+            <div class="services-grid">
+                
+                <!-- Card 1 -->
+                <div class="service-card">
+                    <i class="fa-solid fa-plane-departure"></i>
+                    <h3>Airline Tickets</h3>
+                    <p>Worldwide flight bookings with flexible schedules and competitive corporate pricing arrays.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="service-card">
+                    <i class="fa-solid fa-id-card"></i>
+                    <h3>Schengen Visa Setup</h3>
+                    <p>Full preparation for Schengen visas, background filing, and rapid scheduling for interview dates.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="service-card">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <h3>Global Study Visas</h3>
+                    <p>Expert consulting and application routing for academic degrees across Asia, Europe, and Africa.</p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="service-card">
+                    <i class="fa-solid fa-hotel"></i>
+                    <h3>Hotel Bookings</h3>
+                    <p>Worldwide accommodation arrangements ranging from budget-friendly options to 5-star luxury resorts.</p>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="service-card">
+                    <i class="fa-solid fa-shield-heart"></i>
+                    <h3>Health Insurance</h3>
+                    <p>Compliant international travel medical insurance policies required for global visa compliance.</p>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="service-card">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <h3>Kurdistan Visa & Residence</h3>
+                    <p>Complete legal paperwork handling for incoming visitor visas and long-term residency permits.</p>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="service-card">
+                    <i class="fa-solid fa-book-open-reader"></i>
+                    <h3>Syrian Passport Services</h3>
+                    <p>Official facilitation for the seamless legal renewal and issuance of Syrian Arab Republic citizens' passports.</p>
+                </div>
+
+                <!-- Card 8 -->
+                <div class="service-card">
+                    <i class="fa-solid fa-car"></i>
+                    <h3>International Licenses & Rentals</h3>
+                    <p>Instant issuance of legal international driving documents paired with overseas vehicle rental booking.</p>
+                </div>
+
+                <!-- Card 9 -->
+                <div class="service-card">
+                    <i class="fa-solid fa-language"></i>
+                    <h3>Legal Translation</h3>
+                    <p>Certified, accurate document translation services valid for embassies and government ministries.</p>
+                </div>
+
+                <!-- Card 10 -->
+                <div class="service-card">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <h3>Document Preparation</h3>
+                    <p>Complete assembly and auditing of complex travel dossiers and immigration transactions.</p>
+                </div>
+
+                <!-- Card 11 -->
+                <div class="service-card">
+                    <i class="fa-solid fa-users-ray"></i>
+                    <h3>Tourism & Group Tours</h3>
+                    <p>Tailored local Kurdistan sight-seeing excursions and structured international group holiday packages.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Slogan Section -->
+        <section style="padding: 0 2rem;">
+            <div class="slogan-banner">
+                "Contemplate your future in conjunction with Maryland."
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer / Contact Section -->
+    <footer id="contact">
+        <div class="footer-grid">
+            <div class="footer-about">
+                <h3>MARYLAND COMPANY</h3>
+                <p>Bringing international standards to travel and immigration consultancy services directly within the Kurdistan region.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/share/18pHfkNdW4/" target="_blank" class="social-btn fb"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/maryland_immigration?igsh=MWo3Z2QwdWNtMmgyYw==" target="_blank" class="social-btn ig"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@maryland_immigration?_r=1&_t=ZS-976LjFR3riJ" target="_blank" class="social-btn tt"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-contact">
+                <h3>Our Location & Contact</h3>
+                <p><i class="fa-solid fa-location-dot"></i> HC67+V6, Sulaymaniyah, Sulaymaniyah Governorate</p>
+                <p><i class="fa-solid fa-clock"></i> Sunday - Thursday: 9:00 AM - 5:00 PM</p>
+                <p><i class="fa-solid fa-envelope"></i> Contact office via social channels above for fast registration mapping.</p>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 Maryland Company. All Rights Reserved. Designed Professionally.
+        </div>
+    </footer>
+
+</body>
+</html>
