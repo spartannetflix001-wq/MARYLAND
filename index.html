@@ -1,14 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Viewport updated to lock scaling and zoom strictly -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimum-scale=1.0">
     <title>Maryland Co. | Premium Portal</title>
+    
     <!-- Search Engine Optimization (SEO) Meta Tags -->
-<meta name="description" content="Maryland Co. is a premier global immigration and legal consultancy firm in Iraq, specializing in streamlined visa procurement and travel logistics.">
-<meta name="keywords" content="maryland, maryland travel company, maryland iraq, maryland immigration, maryland sulaymaniyah, ali shwan, travel company iraq">
-<meta name="author" content="Ali Shwan">
+    <meta name="description" content="Maryland Co. is a premier global immigration and legal consultancy firm in Iraq, specializing in streamlined visa procurement and travel logistics.">
+    <meta name="keywords" content="maryland, maryland travel company, maryland iraq, maryland immigration, maryland sulaymaniyah, ali shwan, travel company iraq">
+    <meta name="author" content="Ali Shwan">
 
     <!-- FontAwesome for Premium App Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -50,6 +51,13 @@
             padding: 2.5rem 1rem;
             position: relative;
             overflow-x: hidden;
+            
+            /* Zoom stabilization and native touch smoothing controls */
+            touch-action: pan-y;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            scroll-behavior: smooth;
         }
 
         /* Ambient Luxury Halftone Array Overlay */
@@ -182,6 +190,9 @@
             opacity: 0;
             transform: translate3d(0, 30px, 0) scale(0.97);
             animation: panelEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            
+            /* Pre-allocates memory bounds to secure structural performance */
+            will-change: transform, opacity;
         }
 
         /* --- Brand Identity Architecture --- */
@@ -263,6 +274,9 @@
             opacity: 0;
             transform: translate3d(0, 20px, 0);
             transition: background 0.3s, border-color 0.3s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+            
+            /* Optimizes processing response targets for fast tapping */
+            will-change: transform;
         }
 
         html[dir="rtl"] .hub-link {
