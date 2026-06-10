@@ -1,1 +1,673 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maryland Co. | Premium Portal</title>
+    <!-- FontAwesome for Premium App Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Brand Design System --- */
+        :root {
+            --bg-burgundy: #4a1525; 
+            --bg-burgundy-dark: #2d0b15;
+            --glass-card: rgba(255, 255, 255, 0.025);
+            --glass-border: rgba(255, 255, 255, 0.07);
+            --text-light: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.55);
+            
+            /* High-Fidelity Accent Indicators */
+            --glow-fb: #1877F2;
+            --glow-ig: #E1306C;
+            --glow-tt: #00f2fe;
+            --glow-snap: #FFFC00;
+            --glow-map: #ef4444;
+            --glow-wa: #25D366;
+        }
+
+        /* --- Global Reset & Hardware Acceleration --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-burgundy) 0%, var(--bg-burgundy-dark) 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2.5rem 1rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Luxury Halftone Array Overlay */
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.025) 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            opacity: 0.8;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Dynamic Fluid Background Blur Layer */
+        body::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.1) 0%, transparent 75%);
+            top: 10%;
+            left: -5%;
+            z-index: 0;
+            animation: ambientGlow 12s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        /* --- Premium Floating Language Switcher --- */
+        .lang-wrapper {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 100;
+        }
+
+        html[dir="rtl"] .lang-wrapper {
+            left: auto;
+            right: 1.5rem;
+        }
+
+        .lang-trigger {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-light);
+            padding: 0.55rem 0.95rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            transition: background 0.3s, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .lang-trigger:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translate3d(0, -2px, 0);
+        }
+
+        .lang-dropdown {
+            position: absolute;
+            top: 115%;
+            left: 0;
+            background: #250811;
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            min-width: 140px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 0.35rem;
+        }
+
+        html[dir="rtl"] .lang-dropdown {
+            left: auto;
+            right: 0;
+        }
+
+        .lang-dropdown.active {
+            display: flex;
+            animation: menuPopEntrance 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .lang-opt {
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            padding: 0.55rem 0.75rem;
+            text-align: left;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        html[dir="rtl"] .lang-opt {
+            text-align: right;
+            flex-direction: row-reverse;
+        }
+
+        .lang-opt:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--glow-tt);
+        }
+
+        /* --- Main UI Dashboard Layout --- */
+        .main-panel {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 430px;
+            background: var(--glass-card);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border);
+            border-radius: 36px;
+            padding: 3.5rem 1.75rem 2.5rem 1.75rem;
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.7),
+                        inset 0 1px 2px rgba(255, 255, 255, 0.1);
+            text-align: center;
+            opacity: 0;
+            transform: translate3d(0, 30px, 0) scale(0.97);
+            animation: panelEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* --- Brand Identity Architecture --- */
+        .brand-logo-area {
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .cursive-m {
+            font-family: 'Georgia', cursive, serif;
+            font-size: 5.8rem;
+            font-style: italic;
+            font-weight: 300;
+            line-height: 1;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+            margin-bottom: -0.5rem;
+            user-select: none;
+        }
+
+        .cursive-m::after {
+            content: '\f5b0';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            font-size: 1.1rem;
+            right: -32px;
+            top: 45%;
+            transform: rotate(45deg);
+            color: #ffffff;
+            animation: jetStreamVibration 3s ease-in-out infinite;
+        }
+
+        html[dir="rtl"] .cursive-m::after {
+            right: auto;
+            left: -32px;
+            transform: rotate(-45deg) scaleX(-1);
+        }
+
+        .logo-text-sub {
+            font-size: 1.65rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #ffffff;
+            margin-top: -0.3rem;
+        }
+
+        .motto-text {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.4);
+            margin: 0.4rem 0 2.5rem 0;
+        }
+
+        /* --- Button Action Stack Arrays --- */
+        .button-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .hub-link {
+            display: flex;
+            align-items: center;
+            padding: 1.2rem 1.4rem;
+            border-radius: 22px;
+            text-decoration: none;
+            color: var(--text-light);
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translate3d(0, 20px, 0);
+            transition: background 0.3s, border-color 0.3s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+        }
+
+        html[dir="rtl"] .hub-link {
+            flex-direction: row-reverse;
+        }
+
+        .hub-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 25%;
+            height: 50%;
+            width: 3px;
+            border-radius: 0 4px 4px 0;
+            background: transparent;
+            transition: background 0.3s;
+        }
+
+        html[dir="rtl"] .hub-link::before {
+            left: auto;
+            right: 0;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .hub-link::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+            transform: skewX(-25deg);
+            transition: none;
+        }
+
+        .hub-link:hover::after {
+            left: 150%;
+            transition: left 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .icon-box {
+            font-size: 1.45rem;
+            width: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        html[dir="rtl"] .icon-box {
+            justify-content: flex-end;
+        }
+
+        .text-box {
+            text-align: left;
+            flex-grow: 1;
+        }
+
+        html[dir="rtl"] .text-box {
+            text-align: right;
+            padding-right: 0.8rem;
+            padding-left: 0;
+        }
+
+        .text-box h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.15rem;
+        }
+
+        .text-box p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .arrow-box {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        html[dir="rtl"] .arrow-box i {
+            transform: rotate(180deg);
+        }
+
+        /* --- Interactive Hover states --- */
+        .hub-link:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translate3d(0, -4px, 0) scale(1.01);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .hub-link:hover .icon-box { transform: scale(1.15); }
+        .hub-link:hover .arrow-box { color: #ffffff; transform: translate3d(4px, 0, 0); }
+        html[dir="rtl"] .hub-link:hover .arrow-box { transform: translate3d(-4px, 0, 0); }
+        .hub-link:hover .text-box p { color: rgba(255, 255, 255, 0.9); }
+
+        .lnk-fb::before { background: var(--glow-fb); }
+        .lnk-fb:hover { box-shadow: 0 15px 35px -10px rgba(24, 119, 242, 0.35); }
+        .lnk-fb .icon-box { color: var(--glow-fb); }
+
+        .lnk-ig::before { background: var(--glow-ig); }
+        .lnk-ig:hover { box-shadow: 0 15px 35px -10px rgba(225, 48, 108, 0.35); }
+        .lnk-ig .icon-box { color: var(--glow-ig); }
+
+        .lnk-tt::before { background: var(--glow-tt); }
+        .lnk-tt:hover { box-shadow: 0 15px 35px -10px rgba(0, 242, 254, 0.25); }
+        .lnk-tt .icon-box { color: #ffffff; text-shadow: 1.5px 1.5px var(--glow-tt), -1.5px -1.5px #fe2c55; }
+
+        .lnk-snap::before { background: var(--glow-snap); }
+        .lnk-snap:hover { box-shadow: 0 15px 35px -10px rgba(255, 252, 0, 0.2); }
+        .lnk-snap .icon-box { color: var(--glow-snap); }
+
+        .lnk-map::before { background: var(--glow-map); }
+        .lnk-map:hover { box-shadow: 0 15px 35px -10px rgba(239, 68, 68, 0.35); }
+        .lnk-map .icon-box { color: var(--glow-map); }
+
+        .lnk-wa::before { background: var(--glow-wa); }
+        .lnk-wa:hover { box-shadow: 0 15px 35px -10px rgba(37, 211, 102, 0.35); }
+        .lnk-wa .icon-box { color: var(--glow-wa); }
+
+        /* --- Optimized Enterprise Content Module --- */
+        .company-info-card {
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 24px;
+            padding: 1.4rem;
+            text-align: left;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translate3d(0, 20px, 0);
+            animation: cascadeEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.95s;
+        }
+
+        html[dir="rtl"] .company-info-card {
+            text-align: right;
+        }
+
+        .info-header {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 1px;
+            margin-bottom: 0.6rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        html[dir="rtl"] .info-header {
+            flex-direction: row-reverse;
+        }
+
+        .info-body {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        /* --- Executive Brand Signature Footer Section --- */
+        .owner-section {
+            margin-top: 1.5rem;
+            border-top: 1px dashed rgba(255, 255, 255, 0.08);
+            padding-top: 1.2rem;
+            opacity: 0;
+            transform: translate3d(0, 15px, 0);
+            animation: cascadeEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards 1.05s;
+        }
+
+        .owner-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 0.25rem;
+        }
+
+        .owner-name {
+            font-size: 1.45rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+        }
+
+        /* --- Keyframe Animation Mechanics --- */
+        @keyframes panelEntrance { to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); } }
+        @keyframes menuPopEntrance { from { opacity: 0; transform: translate3d(0, -10px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+        @keyframes cascadeEntrance { to { opacity: 1; transform: translate3d(0, 0, 0); } }
+        @keyframes jetStreamVibration { 0%, 100% { transform: rotate(45deg) translate3d(0,0,0); } 50% { transform: rotate(45deg) translate3d(2px, -2px, 0); } }
+        @keyframes ambientGlow { 0% { transform: translate3d(0,0,0) scale(1); opacity: 0.1; } 100% { transform: translate3d(40px, 20px, 0) scale(1.1); opacity: 0.2; } }
+
+        /* Precise Rendering Cascading Intervals */
+        .button-stack .hub-link:nth-child(1) { animation: cascadeEntrance 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.30s; }
+        .button-stack .hub-link:nth-child(2) { animation: cascadeEntrance 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.40s; }
+        .button-stack .hub-link:nth-child(3) { animation: cascadeEntrance 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.50s; }
+        .button-stack .hub-link:nth-child(4) { animation: cascadeEntrance 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.60s; }
+        .button-stack .hub-link:nth-child(5) { animation: cascadeEntrance 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.70s; }
+        .button-stack .hub-link:nth-child(6) { animation: cascadeEntrance 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.80s; }
+
+        .panel-footer {
+            margin-top: 1.6rem;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.2);
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Language Navigation Component -->
+    <div class="lang-wrapper">
+        <button class="lang-trigger" id="langBtn" onclick="toggleLangMenu()">
+            <i class="fa-solid fa-globe"></i> <span id="currentLangLabel">EN</span>
+        </button>
+        <div class="lang-dropdown" id="langDropdown">
+            <button class="lang-opt" onclick="setLanguage('en')">English <span>🇬🇧</span></button>
+            <button class="lang-opt" onclick="setLanguage('ku')">کوردی <span>☀️</span></button>
+            <button class="lang-opt" onclick="setLanguage('ar')">العربية <span>🇮🇶</span></button>
+        </div>
+    </div>
+
+    <!-- Interface Panel Card -->
+    <div class="main-panel">
+        
+        <!-- Corporate Identity Core -->
+        <div class="brand-logo-area">
+            <div class="cursive-m">M</div>
+            <div class="logo-text-sub" id="brandTitle">Maryland Co.</div>
+        </div>
+
+        <div class="motto-text" id="mottoTxt">
+            "Contemplate your future"
+        </div>
+
+        <!-- Links Action Array Container -->
+        <div class="button-stack">
+            <a href="https://www.facebook.com/share/18pHfkNdW4/" target="_blank" class="hub-link lnk-fb">
+                <div class="icon-box"><i class="fa-brands fa-facebook"></i></div>
+                <div class="text-box">
+                    <h3 id="lblFb">FACEBOOK</h3>
+                    <p id="subFb">Official announcements & program updates</p>
+                </div>
+                <div class="arrow-box"><i class="fa-solid fa-arrow-right-long"></i></div>
+            </a>
+
+            <a href="https://www.instagram.com/maryland_immigration?igsh=MWo3Z2QwdWNtMmgyYw==" target="_blank" class="hub-link lnk-ig">
+                <div class="icon-box"><i class="fa-brands fa-instagram"></i></div>
+                <div class="text-box">
+                    <h3 id="lblIg">INSTAGRAM</h3>
+                    <p id="subIg">Success records & visa processing galleries</p>
+                </div>
+                <div class="arrow-box"><i class="fa-solid fa-arrow-right-long"></i></div>
+            </a>
+
+            <a href="https://www.tiktok.com/@maryland_immigration?_r=1&_t=ZS-976LjFR3riJ" target="_blank" class="hub-link lnk-tt">
+                <div class="icon-box"><i class="fa-brands fa-tiktok"></i></div>
+                <div class="text-box">
+                    <h3 id="lblTt">TIKTOK</h3>
+                    <p id="subTt">Brief video insights & immigration guides</p>
+                </div>
+                <div class="arrow-box"><i class="fa-solid fa-arrow-right-long"></i></div>
+            </a>
+
+            <a href="https://snapchat.com/t/RiTyVXUg" target="_blank" class="hub-link lnk-snap">
+                <div class="icon-box"><i class="fa-brands fa-snapchat"></i></div>
+                <div class="text-box">
+                    <h3 id="lblSnap">SNAPCHAT</h3>
+                    <p id="subSnap">Daily stories & client updates behind the scenes</p>
+                </div>
+                <div class="arrow-box"><i class="fa-solid fa-arrow-right-long"></i></div>
+            </a>
+
+            <a href="https://maps.google.com/?q=HC67+V6,+Sulaymaniyah" target="_blank" class="hub-link lnk-map">
+                <div class="icon-box"><i class="fa-solid fa-location-dot"></i></div>
+                <div class="text-box">
+                    <h3 id="lblMap">LOCATION</h3>
+                    <p id="subMap">HC67+V6, Sulaymaniyah Governorate</p>
+                </div>
+                <div class="arrow-box"><i class="fa-solid fa-arrow-right-long"></i></div>
+            </a>
+
+            <a href="https://wa.me/9647741770770" target="_blank" class="hub-link lnk-wa">
+                <div class="icon-box"><i class="fa-brands fa-whatsapp"></i></div>
+                <div class="text-box">
+                    <h3 id="lblWa">WHATSAPP</h3>
+                    <p id="subWa">Direct chat line to our processing agents</p>
+                </div>
+                <div class="arrow-box"><i class="fa-solid fa-arrow-right-long"></i></div>
+            </a>
+        </div>
+
+        <!-- Corporate Profile Information Section -->
+        <div class="company-info-card">
+            <div class="info-header" id="infoHdr">
+                <i class="fa-solid fa-circle-info"></i> Corporate Profile
+            </div>
+            <div class="info-body" id="infoBdy">
+                Maryland Co. is a premier global immigration and legal consultancy firm specializing in streamlined visa procurement, permanent residency applications, and international travel logistics. Committed to excellence, we bridge borders to turn your global aspirations into reality.
+            </div>
+        </div>
+
+        <!-- Executive Section -->
+        <div class="owner-section">
+            <div class="owner-title" id="ownTtl">Company Owner</div>
+            <div class="owner-name">Ali Shwan</div>
+        </div>
+
+        <!-- Footer Segment -->
+        <div class="panel-footer" id="footerTxt">
+            &copy; 2026 Maryland Co. All Rights Reserved.
+        </div>
+
+    </div>
+
+    <!-- Active Multi-Language Routing Script -->
+    <script>
+        const dictionary = {
+            en: {
+                dir: "ltr", label: "EN",
+                brand: "Maryland Co.", motto: '"Contemplate your future"',
+                fb: "FACEBOOK", fbSub: "Official announcements & program updates",
+                ig: "INSTAGRAM", igSub: "Success records & visa processing galleries",
+                tt: "TIKTOK", ttSub: "Brief video insights & immigration guides",
+                snap: "SNAPCHAT", snapSub: "Daily stories & client updates behind the scenes",
+                map: "LOCATION", mapSub: "HC67+V6, Sulaymaniyah Governorate",
+                wa: "WHATSAPP", waSub: "Direct chat line to our processing agents",
+                infoHdr: "Corporate Profile",
+                infoBdy: "Maryland Co. is a premier global immigration and legal consultancy firm specializing in streamlined visa procurement, permanent residency applications, and international travel logistics. Committed to excellence, we bridge borders to turn your global aspirations into reality.",
+                ownTtl: "Company Owner",
+                footer: "© 2026 Maryland Co. All Rights Reserved."
+            },
+            ku: {
+                dir: "rtl", label: "KU",
+                brand: "کۆمپانیای مارینلاند", motto: '"تێڕامان لە داهاتووت بکە"',
+                fb: "فەیسبووک", fbSub: "ڕاگەیاندنی فەرمی و نوێکارییەکانی ڤیزا",
+                ig: "ئینستاگرام", igSub: "گالەری سەرکەوتنەکان و کاروبارەکانی گەشت",
+                tt: "تیکتۆک", ttSub: "ڤیدیۆی کورت و ڕێپیشاندەری کۆچبەری",
+                snap: "سناپچات", snapSub: "چیرۆکەکانی ڕۆژانە و زانیاری خێرا",
+                map: "ناونیشان", mapSub: "سلێمانی، HC67+V6",
+                wa: "واتسئەپ", waSub: "پەیوەندی ڕاستەوخۆ لەگەڵ ڕاوێژکارانی ئێمە",
+                infoHdr: "دەربارەی کۆمپانیا",
+                infoBdy: "کۆمپانیای مارینلاند یەکێکە لە کۆمپانیا پێشەنگەکان لە بواری ڕاوێژکاری یاسایی و کۆچبەرانی نێودەوڵەتی، تایبەتە بە ڕاپەڕاندنی کاروبارەکانی ڤیزا، وەرگرتنی مافی نیشتەجێبوونی هەمیشەیی و دابینکردنی گەشتێکی ئارام. ئێمە پردێکین بۆ بەدیهێنانی خەونەکانت.",
+                ownTtl: "خاوەنی کۆمپانیا",
+                footer: "© ٢٠٢٦ کۆمپانیای مارینلاند. هەموو مافەکان پارێزراوە."
+            },
+            ar: {
+                dir: "rtl", label: "AR",
+                brand: "شركة ماريلاند", motto: '"تأمل مستقبلك معنا"',
+                fb: "فيسبوك", fbSub: "الإعلانات الرسمية وتحديثات المعاملات",
+                ig: "إنستغرام", igSub: "سجلات النجاح ومعارض تأشيرات السفر",
+                tt: "تيك توك", ttSub: "مقاطع مرئية قصيرة وأدلة الهجرة",
+                snap: "سناب شات", snapSub: "القصص اليومية وتحديثات العملاء أولاً بأول",
+                map: "الموقع", mapSub: "السليمانية، HC67+V6",
+                wa: "واتساب", waSub: "خط دردشة مباشر مع موظفي الخدمة",
+                infoHdr: "ملف الشركة",
+                infoBdy: "شركة ماريلاند هي مؤسسة استشارية رائدة ومتخصصة في شؤون الهجرة والاستشارات القانونية الدولية، نسعى لتسهيل الحصول على تأشيرات السفر والإقامة الدائمة وإدارة المعاملات اللوجستية بكفاءة عالية لنضع العالم بين يديك.",
+                ownTtl: "صاحب الشركة",
+                footer: "© ٢٠٢٦ شركة ماريلاند. جميع الحقوق محفوظة."
+            }
+        };
+
+        function toggleLangMenu() {
+            document.getElementById('langDropdown').classList.toggle('active');
+        }
+
+        function setLanguage(lang) {
+            const data = dictionary[lang];
+            
+            // Apply Layout Flow Directions
+            document.documentElement.setAttribute('dir', data.dir);
+            document.getElementById('currentLangLabel').innerText = data.label;
+            
+            // Populate Dynamic Nodes
+            document.getElementById('brandTitle').innerText = data.brand;
+            document.getElementById('mottoTxt').innerText = data.motto;
+            document.getElementById('lblFb').innerText = data.fb;
+            document.getElementById('subFb').innerText = data.fbSub;
+            document.getElementById('lblIg').innerText = data.ig;
+            document.getElementById('subIg').innerText = data.igSub;
+            document.getElementById('lblTt').innerText = data.tt;
+            document.getElementById('subTt').innerText = data.ttSub;
+            document.getElementById('lblSnap').innerText = data.snap;
+            document.getElementById('subSnap').innerText = data.snapSub;
+            document.getElementById('lblMap').innerText = data.map;
+            document.getElementById('subMap').innerText = data.mapSub;
+            document.getElementById('lblWa').innerText = data.wa;
+            document.getElementById('subWa').innerText = data.waSub;
+            
+            document.getElementById('infoHdr').innerHTML = `<i class="fa-solid fa-circle-info"></i> ${data.infoHdr}`;
+            document.getElementById('infoBdy').innerText = data.infoBdy;
+            document.getElementById('ownTtl').innerText = data.ownTtl;
+            document.getElementById('footerTxt').innerHTML = data.footer;
+
+            // Close Flyout Element Menu
+            document.getElementById('langDropdown').classList.remove('active');
+        }
+
+        // Close Dropdown Menu on Outside Tap Interactions
+        window.onclick = function(event) {
+            if (!event.target.closest('.lang-wrapper')) {
+                document.getElementById('langDropdown').classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
